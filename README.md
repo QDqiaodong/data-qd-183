@@ -38,6 +38,16 @@ uv pip check --python .venv/bin/python
 
 成功退出0；业务质量提示或诊断不等于输入失败，见summary。非法输入或已有目标退出2，保留旧目标。JSON最多8MB，拒绝重复键、未知字段及非有限常量。先完整验证与计算，再同目录临时文件原子硬链接新建一个JSON报告。run/已忽略。
 
+## 剪辑发布素材授权核验（cut-clearance）
+
+独立离线命令 `cut-clearance` 按发布目标核验逐次素材使用：先按渠道、地区与 `release_at` 有效期筛选适用授权，在源时间轴上求并集后与剪辑源区间求差得到缺口，再用严格绑定目标与剪辑实例的已批准例外按正长交集补缺，最后给出逐使用 `cleared`/`blocked`、精确有理数节目时间缺口与目标级结论。它不读取媒体，不改变 `subtitle-conform` 或其 `--broadcast` 行为。
+
+```sh
+.venv/bin/cut-clearance --source fixtures/clearance.json --output run/clearance-report.json
+```
+
+预期：3 个目标中 `dl-tv-us` 为 `cleared`，其余 2 个 `blocked`，共 4 个剩余缺口；未引用的 `g-c-unused` 进入 `unused_grant_ids`；端点接触的例外不补缺，只批准给 `cut-3` 的例外不放行重复实例 `cut-4`，缺口节目时间保留 `17500/3` 等精确分数。字段、排序与失败约定见[授权核验契约](docs/clearance-contract.md)。
+
 ## 数据契约和边界
 
 不打开媒体、不识别语音；输入结构化JSON字幕。时间裁剪保留整段文字，不自动按语义删词。 字段、单位、顺序及失败约定详见[契约](docs/contract.md)。

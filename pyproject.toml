@@ -10,6 +10,7 @@ dependencies = []
 
 [project.scripts]
 subtitle-conform = "subtitle_conform.cli:main"
+cut-clearance = "cut_clearance.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
