@@ -1,0 +1,31 @@
+{
+  "conform": {
+    "sources": [
+      {"id": "source-A", "duration_ms": 100000}
+    ],
+    "clips": [
+      {"id": "cut-1", "source_id": "source-A", "in_ms": 0, "out_ms": 100,
+       "speed_num": 10, "speed_den": 4},
+      {"id": "cut-2", "source_id": "source-A", "in_ms": 100, "out_ms": 200,
+       "speed_num": 10, "speed_den": 12}
+    ],
+    "cues": [
+      {"id": "line-1", "source_id": "source-A", "start_ms": 0, "end_ms": 200,
+       "text": "ABCD"}
+    ],
+    "min_duration_ms": 120,
+    "max_chars_per_second": 30
+  },
+  "broadcast": {
+    "max_shift_ms": 0,
+    "min_gap_frames": 1,
+    "protected": [],
+    "join_cuts": [
+      ["cut-1", "cut-2"]
+    ],
+    "fragment_rules": [
+      {"fragment_id": ["cut-1", "line-1"], "must_keep": true, "priority": 1},
+      {"fragment_id": ["cut-2", "line-1"], "must_keep": true, "priority": 1}
+    ]
+  }
+}

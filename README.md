@@ -26,6 +26,16 @@ uv pip check --python .venv/bin/python
 
 预期：输出时长4000ms、3个字幕碎片、3条SRT、0对重叠、1个有阅读提示的片段。
 
+## 播出端单轨模式（broadcast）
+
+加 `--broadcast` 切换为 25 fps 播出端单轨交付：输入根对象改为 `{"conform": <原输入>, "broadcast": {...}}`，在全部精确碎片（含旧 SRT 会舍掉的极短碎片）上枚举合法条目，按必保覆盖数、可选优先值、条目数、偏移量、字典序五级规则选出唯一方案，并逐片给出审核归属与未入选可选碎片的全局反事实解释。
+
+```sh
+.venv/bin/subtitle-conform --source fixtures/broadcast.json --output run/broadcast-report.json --broadcast
+```
+
+预期：状态 `ready`，同一句对白跨批准剪缝合并为一条 `[0,160)` 字幕，两个必保碎片都被条目 1 覆盖。台标/片名卡保护段、最小间隔、精确偏移与读速约束全部按精确有理数比较；必保无法全覆盖时输出 `blocked` 诊断报告且 `srt_text` 为 null。字段、反事实分类与报告结构见[播出契约](docs/broadcast-contract.md)。
+
 成功退出0；业务质量提示或诊断不等于输入失败，见summary。非法输入或已有目标退出2，保留旧目标。JSON最多8MB，拒绝重复键、未知字段及非有限常量。先完整验证与计算，再同目录临时文件原子硬链接新建一个JSON报告。run/已忽略。
 
 ## 数据契约和边界
