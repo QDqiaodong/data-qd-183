@@ -3,18 +3,27 @@ import json
 from .io import load, publish
 from .service import run
 from .broadcast import run_broadcast
+from .carry import run_carry_review
 
 
 def main():
     parser = argparse.ArgumentParser(description="剪辑字幕对版")
     parser.add_argument("--source", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--broadcast", action="store_true",
-                        help="播出端单轨字幕对版模式")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--broadcast", action="store_true",
+                       help="播出端单轨字幕对版模式")
+    modes.add_argument("--carry-review", action="store_true",
+                       help="重新剪辑后的逐次字幕审校迁移模式")
     args = parser.parse_args()
     try:
         data = load(args.source)
-        result = run_broadcast(data) if args.broadcast else run(data)
+        if args.broadcast:
+            result = run_broadcast(data)
+        elif args.carry_review:
+            result = run_carry_review(data)
+        else:
+            result = run(data)
         publish(args.output, result)
         if args.broadcast:
             print(json.dumps({"status": result["status"],

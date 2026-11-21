@@ -1,0 +1,53 @@
+{
+  "previous": {
+    "sources": [
+      {"id": "source-A", "duration_ms": 10000}
+    ],
+    "clips": [
+      {"id": "old-1", "source_id": "source-A", "in_ms": 1000, "out_ms": 4000,
+       "speed_num": 1, "speed_den": 1},
+      {"id": "old-2", "source_id": "source-A", "in_ms": 6000, "out_ms": 9000,
+       "speed_num": 1, "speed_den": 1}
+    ],
+    "cues": [
+      {"id": "cap-1", "source_id": "source-A", "start_ms": 1500, "end_ms": 3500,
+       "text": "First line."},
+      {"id": "cap-2", "source_id": "source-A", "start_ms": 6200, "end_ms": 8800,
+       "text": "Second line."}
+    ],
+    "min_duration_ms": 600,
+    "max_chars_per_second": 20
+  },
+  "current": {
+    "sources": [
+      {"id": "source-A", "duration_ms": 10000}
+    ],
+    "clips": [
+      {"id": "new-1", "source_id": "source-A", "in_ms": 1200, "out_ms": 3600,
+       "speed_num": 1, "speed_den": 1},
+      {"id": "new-2", "source_id": "source-A", "in_ms": 6200, "out_ms": 9000,
+       "speed_num": 2, "speed_den": 1}
+    ],
+    "cues": [
+      {"id": "cap-1", "source_id": "source-A", "start_ms": 1500, "end_ms": 3500,
+       "text": "First line."},
+      {"id": "cap-2", "source_id": "source-A", "start_ms": 6200, "end_ms": 8800,
+       "text": "Second line."}
+    ],
+    "min_duration_ms": 600,
+    "max_chars_per_second": 20
+  },
+  "links": [
+    {"id": "link-1", "old_clip_id": "old-1", "new_clip_id": "new-1",
+     "start_ms": 1200, "end_ms": 3600},
+    {"id": "link-2", "old_clip_id": "old-2", "new_clip_id": "new-2",
+     "start_ms": 6200, "end_ms": 9000}
+  ],
+  "edits": [
+    {"id": "fix-1", "clip_id": "old-1", "cue_id": "cap-1",
+     "start_ms": 2000, "end_ms": 3000,
+     "action": "replace", "text": "First line, revised."},
+    {"id": "hide-1", "clip_id": "old-2", "cue_id": "cap-2",
+     "start_ms": 7000, "end_ms": 8000, "action": "hide"}
+  ]
+}

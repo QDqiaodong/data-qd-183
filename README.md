@@ -38,6 +38,16 @@ uv pip check --python .venv/bin/python
 
 成功退出0；业务质量提示或诊断不等于输入失败，见summary。非法输入或已有目标退出2，保留旧目标。JSON最多8MB，拒绝重复键、未知字段及非有限常量。先完整验证与计算，再同目录临时文件原子硬链接新建一个JSON报告。run/已忽略。
 
+## 重新剪辑审校迁移（carry-review）
+
+加 `--carry-review` 切换为重新剪辑后的逐次字幕审校迁移：输入根对象为 `{"previous": <原输入>, "current": <原输入>, "links": [...], "edits": [...]}`，只凭剪辑部提供的来源对应关系，把旧剪辑实例上批准的改词/隐藏决定迁移到新版字幕；原始正文已更正或候选结论不一致的区间标记 `stale_review`/`conflict` 并阻断交付，可交付时按迁移后的实显正文重新计算质检与 SRT。
+
+```sh
+.venv/bin/subtitle-conform --source fixtures/carry-review.json --output run/carry-report.json --carry-review
+```
+
+预期：状态 `ready`，6 段审校、5 条交付字幕、5 条 SRT、4 条质检提示，改词与隐藏两条旧决定完整迁移。判定规则、逐段清单、旧决定去向与交付字段见[审校迁移契约](docs/carry-review-contract.md)。`--carry-review` 与 `--broadcast` 互斥。
+
 ## 剪辑发布素材授权核验（cut-clearance）
 
 独立离线命令 `cut-clearance` 按发布目标核验逐次素材使用：先按渠道、地区与 `release_at` 有效期筛选适用授权，在源时间轴上求并集后与剪辑源区间求差得到缺口，再用严格绑定目标与剪辑实例的已批准例外按正长交集补缺，最后给出逐使用 `cleared`/`blocked`、精确有理数节目时间缺口与目标级结论。它不读取媒体，不改变 `subtitle-conform` 或其 `--broadcast` 行为。
