@@ -1,0 +1,113 @@
+{
+  "conform": {
+    "sources": [
+      {
+        "id": "program",
+        "duration_ms": 1000
+      }
+    ],
+    "clips": [
+      {
+        "id": "take-1",
+        "source_id": "program",
+        "in_ms": 0,
+        "out_ms": 600,
+        "speed_num": 1,
+        "speed_den": 1
+      }
+    ],
+    "cues": [
+      {
+        "id": "line-a",
+        "source_id": "program",
+        "start_ms": 0,
+        "end_ms": 300,
+        "text": "同一句话"
+      },
+      {
+        "id": "line-b",
+        "source_id": "program",
+        "start_ms": 300,
+        "end_ms": 600,
+        "text": "同一句话"
+      }
+    ],
+    "min_duration_ms": 0,
+    "max_chars_per_second": 100
+  },
+  "capture_end_ms": 1200,
+  "last_seq": 6,
+  "clock": [
+    {
+      "start_ms": 0,
+      "end_ms": 400,
+      "program_start_ms": 0,
+      "rate_num": 3,
+      "rate_den": 2
+    },
+    {
+      "start_ms": 400,
+      "end_ms": 800,
+      "program_start_ms": 350,
+      "rate_num": 0,
+      "rate_den": 1
+    },
+    {
+      "start_ms": 800,
+      "end_ms": 1200,
+      "program_start_ms": 50,
+      "rate_num": 1,
+      "rate_den": 1
+    }
+  ],
+  "batches": [
+    [
+      {
+        "seq": 1,
+        "at_ms": 0,
+        "op": "snapshot",
+        "active": [1]
+      },
+      {
+        "seq": 2,
+        "at_ms": 200,
+        "op": "hide",
+        "cue": 1
+      },
+      {
+        "seq": 4,
+        "at_ms": 400,
+        "op": "show",
+        "cue": 1
+      },
+      {
+        "seq": 5,
+        "at_ms": 800,
+        "op": "snapshot",
+        "active": [1]
+      },
+      {
+        "seq": 6,
+        "at_ms": 1050,
+        "op": "snapshot",
+        "active": [2]
+      }
+    ],
+    [
+      {
+        "seq": 3,
+        "at_ms": 200,
+        "op": "show",
+        "cue": 2
+      }
+    ],
+    [
+      {
+        "seq": 3,
+        "at_ms": 200,
+        "op": "show",
+        "cue": 2
+      }
+    ]
+  ]
+}
