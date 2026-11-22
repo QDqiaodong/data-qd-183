@@ -12,6 +12,7 @@ dependencies = []
 subtitle-conform = "subtitle_conform.cli:main"
 cut-clearance = "cut_clearance.cli:main"
 subtitle-playback-qc = "playback_qc.cli:main"
+subtitle-cost = "subtitle_cost.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

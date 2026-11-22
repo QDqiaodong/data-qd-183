@@ -1,0 +1,83 @@
+{
+  "op": "merge",
+  "bundles": [
+    {
+      "op": "merge",
+      "bundles": [
+        {
+          "schema_version": 1,
+          "mode": "subtitle-cost",
+          "op": "bundle",
+          "programs": [
+            {
+              "program_id": "prog-p",
+              "cost_center": "center-a",
+              "withdrawn": false,
+              "usage": [
+                {
+                  "source_id": "lib-1",
+                  "cue_id": "cue-x",
+                  "cue_start_ms": 0,
+                  "cue_end_ms": 100,
+                  "intervals": [
+                    [0, 60]
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "schema_version": 1,
+          "mode": "subtitle-cost",
+          "op": "bundle",
+          "programs": [
+            {
+              "program_id": "prog-r",
+              "cost_center": "center-b",
+              "withdrawn": false,
+              "usage": [
+                {
+                  "source_id": "lib-1",
+                  "cue_id": "cue-x",
+                  "cue_start_ms": 0,
+                  "cue_end_ms": 100,
+                  "intervals": [
+                    [20, 80]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "withdraw": []
+    },
+    {
+      "schema_version": 1,
+      "mode": "subtitle-cost",
+      "op": "bundle",
+      "programs": [
+        {
+          "program_id": "prog-q",
+          "cost_center": "center-a",
+          "withdrawn": false,
+          "usage": [
+            {
+              "source_id": "lib-1",
+              "cue_id": "cue-x",
+              "cue_start_ms": 0,
+              "cue_end_ms": 100,
+              "intervals": [
+                [40, 100]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "withdraw": [
+    "prog-p"
+  ]
+}

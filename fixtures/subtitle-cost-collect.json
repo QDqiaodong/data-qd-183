@@ -1,0 +1,57 @@
+{
+  "op": "collect",
+  "program_id": "prog-night-1",
+  "cost_center": "cc-news",
+  "conform": {
+    "sources": [
+      {
+        "id": "source-A",
+        "duration_ms": 10000
+      }
+    ],
+    "clips": [
+      {
+        "id": "cut-1",
+        "source_id": "source-A",
+        "in_ms": 2000,
+        "out_ms": 5000,
+        "speed_num": 1,
+        "speed_den": 1
+      },
+      {
+        "id": "cut-2",
+        "source_id": "source-A",
+        "in_ms": 7000,
+        "out_ms": 9000,
+        "speed_num": 2,
+        "speed_den": 1
+      },
+      {
+        "id": "cut-3",
+        "source_id": "source-A",
+        "in_ms": 4000,
+        "out_ms": 4500,
+        "speed_num": 1,
+        "speed_den": 1
+      }
+    ],
+    "cues": [
+      {
+        "id": "caption-1",
+        "source_id": "source-A",
+        "start_ms": 1000,
+        "end_ms": 6000,
+        "text": "Welcome."
+      },
+      {
+        "id": "caption-2",
+        "source_id": "source-A",
+        "start_ms": 4000,
+        "end_ms": 8000,
+        "text": "Harbor lights."
+      }
+    ],
+    "min_duration_ms": 600,
+    "max_chars_per_second": 20
+  }
+}

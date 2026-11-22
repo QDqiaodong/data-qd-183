@@ -68,6 +68,18 @@ uv pip check --python .venv/bin/python
 
 预期：3 批日志全部应用后最终 1 条告警 `[400,800)` 多显行 1，三项时长为未知 0、漏显 0、多显 400；首批缺第 3 条时 `[200,800)` 只记未知不算漏显，第二批补包撤回该未知告警并改为多显告警（未知 −600、多显 +400），第三批重发无更正。时钟覆盖、可信状态、行号对照、更正与计量规则见[播放质检契约](docs/playback-qc-contract.md)。
 
+## 跨节目字幕译制费分账（subtitle-cost）
+
+独立离线命令 `subtitle-cost` 处理供应商按源字幕一次性收取、财务须按各成本中心实际源用量分账的译制费，以输入的 `op` 区分三步：`collect` 在普通对版的精确碎片上统计单节目对各 `[source_id,cue_id]` 的源时间半开区间并集（同节目重复剪入只计一次、变速不改源用量、SRT 舍掉的短碎片仍计入）；`merge` 归并任意层级的用量包并永久处理节目撤回（同 ID 内容不同即报错，撤回可先于用量到达且旧包重送不能恢复，保留单节目用量而不折算中心总量）；`settle` 按每段上不同成本中心等分长度得到精确权重，逐 cue 用最大余数法分配整笔费用，未使用报价列待摊，分配与待摊对平报价。
+
+```sh
+.venv/bin/subtitle-cost --source fixtures/subtitle-cost-collect.json --output run/cost-collect.json
+.venv/bin/subtitle-cost --source fixtures/subtitle-cost-merge.json   --output run/cost-merge.json
+.venv/bin/subtitle-cost --source fixtures/subtitle-cost-settle.json  --output run/cost-settle.json
+```
+
+预期：collect 得到 1 个有效节目且 `caption-2` 保留两段不相邻源覆盖；merge 的三层归并后 3 个节目中 `prog-p` 为撤回墓碑；settle 对 101 分报价按两中心各 40 的精确权重分配 51/50，另把 37 分未使用报价列入待摊，101+37 对平全部报价。JSON 契约、稳定输出顺序、撤回墓碑与失败约定见[译制费分账契约](docs/subtitle-cost-contract.md)。
+
 ## 数据契约和边界
 
 不打开媒体、不识别语音；输入结构化JSON字幕。时间裁剪保留整段文字，不自动按语义删词。 字段、单位、顺序及失败约定详见[契约](docs/contract.md)。
