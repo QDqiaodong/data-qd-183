@@ -1,0 +1,6 @@
+{
+  "op": "issue",
+  "request_id": "seat-alice-1",
+  "reviewer": "alice",
+  "max_fragments": 4
+}

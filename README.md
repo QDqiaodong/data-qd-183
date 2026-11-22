@@ -80,6 +80,21 @@ uv pip check --python .venv/bin/python
 
 预期：collect 得到 1 个有效节目且 `caption-2` 保留两段不相邻源覆盖；merge 的三层归并后 3 个节目中 `prog-p` 为撤回墓碑；settle 对 101 分报价按两中心各 40 的精确权重分配 51/50，另把 37 分未使用报价列入待摊，101+37 对平全部报价。JSON 契约、稳定输出顺序、撤回墓碑与失败约定见[译制费分账契约](docs/subtitle-cost-contract.md)。
 
+## 可重取的字幕复核工单（subtitle-review-queue）
+
+独立离线命令 `subtitle-review-queue` 从固定版的普通对版输入登记待复核组，并在独立账本里记录领取、交回、完成和原样重取。同一源 cue 的多次出现、精确节目区间正长相交的行（含中间行无提示时的传递闭包）必须整组复核；组内只有出现时长/读速提示、舍入后丢弃或任意两行精确重叠时才派单。`issue` 按登记顺序把整组装进席位容量、不拆组；`resolve` 由主管整单完成或退回；成功提交的请求 ID 配相同请求会原样返回最初回执，先于当前状态判断。一个账本对应一个已锁定节目版，重新剪辑须换账本、不迁移旧决定。
+
+```sh
+.venv/bin/subtitle-review-queue --state run/review-state.json \
+  --source fixtures/review-queue-register.json --output run/review-register.json
+.venv/bin/subtitle-review-queue --state run/review-state.json \
+  --source fixtures/review-queue-issue.json --output run/review-issue.json
+.venv/bin/subtitle-review-queue --state run/review-state.json \
+  --source fixtures/review-queue-resolve.json --output run/review-return.json
+```
+
+预期：登记 2 个待复核组——`["X","A"]` 四成员（X 上 A/B/C 与 Y 上 A）与变速剪辑中 SRT 消失的 `["Z","D"]`（精确区间 `[140,421/3)`）；容量 1 跳过四成员组领取第二组，容量 4 只领取四成员组。账本旁的锁文件保证跨进程互斥与完整快照；变更原子提交后才写报告，报告写失败退出 3，用原请求和新输出路径重取。字段、请求/响应契约与失败约定见[复核工单契约](docs/review-queue-contract.md)。
+
 ## 数据契约和边界
 
 不打开媒体、不识别语音；输入结构化JSON字幕。时间裁剪保留整段文字，不自动按语义删词。 字段、单位、顺序及失败约定详见[契约](docs/contract.md)。

@@ -1,0 +1,73 @@
+{
+  "op": "register",
+  "conform": {
+    "sources": [
+      {
+        "id": "source-S",
+        "duration_ms": 1000
+      },
+      {
+        "id": "source-T",
+        "duration_ms": 1000
+      }
+    ],
+    "clips": [
+      {
+        "id": "X",
+        "source_id": "source-S",
+        "in_ms": 0,
+        "out_ms": 100,
+        "speed_num": 1,
+        "speed_den": 1
+      },
+      {
+        "id": "Y",
+        "source_id": "source-S",
+        "in_ms": 0,
+        "out_ms": 40,
+        "speed_num": 1,
+        "speed_den": 1
+      },
+      {
+        "id": "Z",
+        "source_id": "source-T",
+        "in_ms": 0,
+        "out_ms": 1,
+        "speed_num": 3,
+        "speed_den": 1
+      }
+    ],
+    "cues": [
+      {
+        "id": "A",
+        "source_id": "source-S",
+        "start_ms": 0,
+        "end_ms": 45,
+        "text": "甲"
+      },
+      {
+        "id": "B",
+        "source_id": "source-S",
+        "start_ms": 40,
+        "end_ms": 80,
+        "text": "乙"
+      },
+      {
+        "id": "C",
+        "source_id": "source-S",
+        "start_ms": 70,
+        "end_ms": 90,
+        "text": "丙"
+      },
+      {
+        "id": "D",
+        "source_id": "source-T",
+        "start_ms": 0,
+        "end_ms": 1,
+        "text": "丁"
+      }
+    ],
+    "min_duration_ms": 0,
+    "max_chars_per_second": 1000
+  }
+}
